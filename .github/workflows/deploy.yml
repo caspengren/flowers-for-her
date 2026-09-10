@@ -33,6 +33,13 @@ jobs:
       - name: Build site
         run: npm run build
 
+      - name: Verify production artifact
+        run: |
+          test -f dist/index.html
+          test -d dist/assets
+          grep -q '/flowers-for-her/assets/' dist/index.html
+          ! grep -q '/src/main.jsx' dist/index.html
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
         with:
